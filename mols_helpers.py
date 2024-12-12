@@ -7,19 +7,19 @@ from library import (
     infinity_points_print
 )
 
-def print_mols(square, dimension):
+def print_mols(square, size):
     """
     Given a square, print a human legible output representing the MOLS. 
     
     Args:
         square (dict): Representation of the MOLS
-        dimension (int): Size of the square
+        size (int): Size of the square
     """
     # Print square
     for location in square:
         if isinstance(location, tuple):
             print(f"{square[location]} ", end = "")
-            if location[1] == dimension - 1:
+            if location[1] == size - 1:
                 print()
 
     print("\n")
@@ -60,30 +60,77 @@ def index_objects(file_names):
 
     return square
 
-def next_square(dimension, square, current):
+def next_square(dimension, size, current):
     """
     Find the next square along the diagonal for a specific dimension of an MOLS.
+    WILL go out of the square.
     
     Args:
         dimension (string or int): Dimension that the diagonal is traveling across, horizontal increment.
-        square (int): Size of the MOLS being traveled on.
+        size (int): Size of the MOLS being traveled on.
         current (tuple): Location of symbol that is being traveled away from. 
 
     Returns: 
         A tuple representing the position of the next symbol in the diagonal.
     """
     if dimension == "horizontal":
-        return (current[0], current[1] + 1)
+        if current[1] < size - 1:
+            return (current[0], current[1] + 1)
+        return (current[0], 0)
 
     row = current[0] + 1
 
     if dimension == "vertical":
-        return (row, current[1])
+        if current[0] < size - 1:
+            return (row, current[1])
+        return (0, current[1])
 
     if current[1] < dimension:
         # Overflow, wrap to other side of square
         overflow = dimension - current[1]
-        column = square - overflow
+        column = size - overflow
         return (row, column)
     
     return (row, current[1] - dimension)
+
+def convert_to_object(square, locations):
+    """
+    Convert locations into object names.
+    
+    Args:
+        square (dict): Representation of MOLS.
+        locations (list): Locations of objects.
+        
+    Returns:
+        A list of the objects.
+    """
+    objects = []
+    for location in locations:
+        objects.append(square[location])
+
+    return objects
+        
+def find_line(start, dimension, size, square):
+    """
+    Given the starting position of the line, find all the objects in the line.
+    
+    Args:
+        start (tuple): Location of the starting object.
+        dimension (string or int): Dimension that the diagonal is traveling across, horizontal increment.
+        size (int): Size of the MOLS being traveled on.
+        square (dict): Representation of MOLS.
+
+    Returns:
+        A list of all the objects in the line. 
+    """
+    positions = [start]
+    
+    for count in range(1,size):
+        positions.append(next_square(dimension, size, positions[count - 1]))
+
+    objects = []
+    for position in positions:
+        objects.append(square[position]) 
+    objects.append(square[dimension])
+
+    return objects
