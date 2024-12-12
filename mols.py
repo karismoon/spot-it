@@ -18,20 +18,20 @@ size = 8
 square = index_objects(file_names)
 print_mols(square, size)
 
-cards = []
+mols_cards = []
 infinity_points_card = []
 
 for infinity_point in infinity_points:
     infinity_points_card.append(square[infinity_point])
-    cards.append(f"infinity point: {infinity_point}")
+    mols_cards.append(f"infinity point: {infinity_point}")
     if infinity_point == "horizontal":
         for start_row in range(size):
-            cards.append(find_line((start_row, 0), infinity_point, size, square))
+            mols_cards.append(find_line((start_row, 0), infinity_point, size, square))
     else:
         for start_column in range(size):
-            cards.append(find_line((0, start_column), infinity_point, size, square))
+            mols_cards.append(find_line((0, start_column), infinity_point, size, square))
 
-cards.append(infinity_points_card)
+mols_cards.append(infinity_points_card)
 
 # print(find_line((0, 1), "horizontal", size, square))
 
