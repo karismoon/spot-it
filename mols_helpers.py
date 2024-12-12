@@ -2,7 +2,7 @@
 Helper functions to generate the MOLS.
 """
 
-from pic_library import infinity_points
+from library import infinity_points
 
 def print_mols(file_names):
     """
@@ -28,7 +28,8 @@ def print_mols(file_names):
 def index_objects(file_names):
     """
     Given a list of objects, assign each of them to a position in an 8x8 MOLS.
-    
+    Position is formatted (row, column).
+
     Args:
         file_names (list): Names of the symbols.
 
@@ -56,16 +57,25 @@ def next_square(dimension, square, current):
     Find the next square along the diagonal for a specific dimension of an MOLS.
     
     Args:
-        dimension (string or int): Dimension that the diagonal is traveling across.
-        square (dict): Representation of the MOLS being traveled on.
-        current (string): Name of symbol that is being traveled away from. 
+        dimension (string or int): Dimension that the diagonal is traveling across, horizontal increment.
+        square (int): Size of the MOLS being traveled on.
+        current (tuple): Location of symbol that is being traveled away from. 
 
     Returns: 
-        A string representing the next symbol in the diagonal.
+        A tuple representing the position of the next symbol in the diagonal.
     """
     if dimension == "horizontal":
-        next_location = (square[current](0, square[current](1) + 1)
-        
-    if square[current](1) < dimension:
+        return (current[0], current[1] + 1)
+
+    row = current[0] + 1
+
+    if dimension == "vertical":
+        return (row, current[1])
+
+    if current[1] < dimension:
         # Overflow, wrap to other side of square
-        
+        overflow = dimension - current[1]
+        column = square - overflow
+        return (row, column)
+    
+    return (row, current[1] - dimension)
