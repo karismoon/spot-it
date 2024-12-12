@@ -2,28 +2,36 @@
 Helper functions to generate the MOLS.
 """
 
-from library import infinity_points
+from library import (
+    infinity_points,
+    infinity_points_print
+)
 
-def print_mols(file_names):
+def print_mols(square, dimension):
     """
-    Given a list of symbols, print a human legible output representing the MOLS. 
+    Given a square, print a human legible output representing the MOLS. 
     
     Args:
-        file_names (list): Names of the symbols
+        square (dict): Representation of the MOLS
+        dimension (int): Size of the square
     """
     # Print square
-    for index in range(9, len(file_names)):
-        if index % 8 != 0:
-            print(f"{file_names[index]} ", end = "")
-        else:
-            print(f"{file_names[index]} ")
+    for location in square:
+        if isinstance(location, tuple):
+            print(f"{square[location]} ", end = "")
+            if location[1] == dimension - 1:
+                print()
 
     print("\n")
 
     # Print infinity points
     print("Infinity Points")
-    for index in range(9):
-        print(f"{infinity_points[index]}: {file_names[index]}")
+    for location in square:
+        if isinstance(location, str):
+            print(f"{location}: {square[location]}")
+        if location in infinity_points_print:
+            print(f"{infinity_points_print[location]}: {square[location]}")
+
 
 def index_objects(file_names):
     """

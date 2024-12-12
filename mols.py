@@ -8,5 +8,6 @@ from mols_helpers import (
     index_objects
 )
 
-print_mols(file_names)
+dimension = 8
 square = index_objects(file_names)
+print_mols(square, dimension)

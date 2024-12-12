@@ -151,11 +151,21 @@ bibd = [[0, 1, 2, 3, 4, 5, 6, 7, 72],
 infinity_points = [
     "horizontal",
     "vertical",
-    "outermost",
-    "2nd from outermost",
-    "3rd from outermost",
-    "4th from outermost",
-    "5th from outermost",
-    "6th from outermost",
-    "innermost",
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
 ]
+
+infinity_points_print = {
+    1: "outermost", 
+    2: "2nd from outermost",
+    3: "3rd from outermost",
+    4: "4th from outermost",
+    5: "5th from outermost",
+    6: "6th from outermost",
+    7: "innermost",
+}
