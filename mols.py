@@ -15,6 +15,7 @@ from mols_helpers import (
 )
 
 size = 8
+# Generate the MOLS
 square = index_objects(file_names)
 print_mols(square, size)
 
