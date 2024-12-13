@@ -34,6 +34,11 @@ for infinity_point in infinity_points:
 
 mols_cards.append(infinity_points_card)
 
+for card in mols_cards:
+    print(card)
+
+# print(mols_cards)
+
 # print(find_line((0, 1), "horizontal", size, square))
 
 # for infinity_point in infinity_points:
