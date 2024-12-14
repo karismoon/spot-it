@@ -27,6 +27,7 @@ def draw_hexagon(image, center, radius, fill_color, outline_color):
     draw = ImageDraw.Draw(image)
     draw.polygon(points, fill=fill_color, outline=outline_color)
 
+
 def card_symbols(bibd_list, names):
     """
     Function that takes a bibd and peoples' names and creates a spot it deck.
@@ -75,15 +76,15 @@ def make_card(faces):
     Return:
         A PIL canvas with final created card
     """
-    WIDTH = 3024
-    HEIGHT = 3024
+    WIDTH = 1200
+    HEIGHT = 1200
 
     face_paths = {idx: f"faces/{face}.png" for idx, face in enumerate(faces)}
 
     loaded_faces = {idx: Image.open(path) for idx, path in face_paths.items()}
 
     # Manipulate face img
-    new_size = (600,600)
+    new_size = (200,200)
     scaled_faces = {idx: face.resize(new_size) for idx, face in loaded_faces.items()}
 
     rotation_angles = [180, 60, 300, 135, 195, 270, 90, 330, 45]
@@ -91,15 +92,15 @@ def make_card(faces):
 
     # Create a blank canvas
     card = Image.new("RGBA", (WIDTH, HEIGHT), (255,255,255,255))  # White background
-    draw_hexagon(card, (WIDTH/2, HEIGHT/2), 1400, (255,255,255,255), (0,0,0,1))
+    draw_hexagon(card, (WIDTH/2, HEIGHT/2), 500, (255,255,255,255), (0,0,0,1))
 
     FACE_WIDTH = rotated_faces[0].width
     FACE_HEIGHT = rotated_faces[0].height
 
     # Paste images onto the card
     card.paste(rotated_faces[0], (int(WIDTH/2-FACE_WIDTH/2), int(HEIGHT/2-FACE_HEIGHT)), rotated_faces[0])
-    card.paste(rotated_faces[1], (int(WIDTH*2/3-FACE_WIDTH/2-140), int(HEIGHT/2-20)), rotated_faces[1])
-    card.paste(rotated_faces[2], (int(WIDTH/3-FACE_WIDTH/2+140), int(HEIGHT/2-20)), rotated_faces[2])
+    card.paste(rotated_faces[1], (int(WIDTH*2/3-FACE_WIDTH/2-80), int(HEIGHT/2-20)), rotated_faces[1])
+    card.paste(rotated_faces[2], (int(WIDTH/3-FACE_WIDTH/2+80), int(HEIGHT/2-20)), rotated_faces[2])
     card.paste(rotated_faces[3], (int(WIDTH*2/3-FACE_WIDTH/2), int(HEIGHT/2-2*FACE_HEIGHT)), rotated_faces[3])
     card.paste(rotated_faces[4], (int(WIDTH/3-FACE_WIDTH/2), int(HEIGHT/2-2*FACE_HEIGHT)), rotated_faces[4])
     card.paste(rotated_faces[5], (int(WIDTH/3-FACE_WIDTH*1.25), int(HEIGHT/2-FACE_HEIGHT/2)), rotated_faces[5])
@@ -111,19 +112,32 @@ def make_card(faces):
 
 def make_page(cards):
     """
-    Function to combine # cards on to an 8x11 inch page for printing
+    Combine 4 cards onto an 8.5x11 inch page for printing.
 
     Args:
-        cards: A list representing all the cards to put on page
+        cards: A list of PIL Image objects representing the cards.
 
     Returns:
-        A PIL Canvas with cards on a page
+        A PIL Image canvas with cards arranged on a page.
     """
+    # Standard page size in pixels (8.5x11 inches at 300 DPI)
     width = 2550
     height = 3300
 
-    
+    # Create a blank page with a white background
+    page = Image.new("RGBA", (width, height), (255, 255, 255, 0))
 
-    page = Image.new("RGBA", (width, height), (255,255,255,255)) # white bg
+    # Position and paste cards on the page
+    positions = [
+        (0,0),
+        (1200, 0),
+        (0,1100),
+        (1200,1100),
+        (0, 2200),
+        (1200,2200)
+    ]
+
+    for card, pos in zip(cards, positions):
+        page.paste(card, pos, card)
 
     return page
