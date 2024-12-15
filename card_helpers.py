@@ -51,20 +51,7 @@ def card_symbols(bibd_list, names):
             temp.append(names[j])
         result.append(temp)
     return result
-    """
-    result = []
-    # loop through every list in the BIBD
-    for i in bibd_list:
-        temp1 = 0
-        temp2 = []
-        # loop through every item in each BIBD list
-        for j in i:
-            if j == 1:
-                temp2.append(names[temp1])
-            temp1 =+ 1
-        result.append(temp1)
-    return result
-    """
+
 
 def make_card(faces):
     """
@@ -79,7 +66,7 @@ def make_card(faces):
     WIDTH = 1200
     HEIGHT = 1200
 
-    face_paths = {idx: f"faces/{face}.png" for idx, face in enumerate(faces)}
+    face_paths = {idx: f"faces/faces/{face}.png" for idx, face in enumerate(faces)}
 
     loaded_faces = {idx: Image.open(path) for idx, path in face_paths.items()}
 
