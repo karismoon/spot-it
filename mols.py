@@ -23,32 +23,21 @@ mols_cards = []
 infinity_points_card = []
 
 for infinity_point in infinity_points:
-    infinity_points_card.append(square[infinity_point])
-    mols_cards.append(f"infinity point: {infinity_point}")
+    # For each infinity point (each dimension)
+    infinity_points_card.append(square[infinity_point]) # Add the infinity point to the card with just infinity points
+    # mols_cards.append(f"infinity point: {infinity_point}")
     if infinity_point == "horizontal":
+        # For the horizontal cards
         for start_row in range(size):
+            # Add each card to the list
             mols_cards.append(find_line((start_row, 0), infinity_point, size, square))
     else:
+        # For all non-horizontal cards
         for start_column in range(size):
+            # For every possible column to start at
             mols_cards.append(find_line((0, start_column), infinity_point, size, square))
 
 mols_cards.append(infinity_points_card)
 
 for card in mols_cards:
     print(card)
-
-# print(mols_cards)
-
-# print(find_line((0, 1), "horizontal", size, square))
-
-# for infinity_point in infinity_points:
-#     print(infinity_point)
-#     print(find_line((0, 1), infinity_point, size, square))
-
-
-# Testing next_square function
-
-# first_tuple = (1, 6)
-# print(f"{first_tuple}: {square[first_tuple]}")
-# next_tuple = next_square("vertical", size, first_tuple)
-# print(f"{next_tuple}: {square[next_tuple]}")
