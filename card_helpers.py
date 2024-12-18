@@ -53,12 +53,13 @@ def card_symbols(bibd_list, names):
     return result
 
 
-def make_card(faces):
+def make_card(faces, path):
     """
     Function to create a card.
 
     Args:
         faces: A list with 9 string elements representing the names of faces to use
+        path: A string representing absolute path to desired faces.
     
     Return:
         A PIL canvas with final created card
@@ -66,9 +67,9 @@ def make_card(faces):
     WIDTH = 1200
     HEIGHT = 1200
 
-    face_paths = {idx: f"faces/faces/{face}.png" for idx, face in enumerate(faces)}
+    face_paths = {idx: path for idx, face in enumerate(faces)} # Create dictionary for faces
 
-    loaded_faces = {idx: Image.open(path) for idx, path in face_paths.items()}
+    loaded_faces = {idx: Image.open(path) for idx, path in face_paths.items()} # Load images
 
     # Manipulate face img
     new_size = (200,200)
@@ -79,7 +80,7 @@ def make_card(faces):
 
     # Create a blank canvas
     card = Image.new("RGBA", (WIDTH, HEIGHT), (255,255,255,255))  # White background
-    draw_hexagon(card, (WIDTH/2, HEIGHT/2), 500, (255,255,255,255), (0,0,0,1))
+    draw_hexagon(card, (WIDTH/2, HEIGHT/2), 500, (255,255,255,255), (0,0,0,1)) # Add hexagon shape to card
 
     FACE_WIDTH = rotated_faces[0].width
     FACE_HEIGHT = rotated_faces[0].height
@@ -111,8 +112,8 @@ def make_page(cards):
     width = 2550
     height = 3300
 
-    # Create a blank page with a white background
-    page = Image.new("RGBA", (width, height), (255, 255, 255, 0))
+    # Create a blank page with a black background
+    page = Image.new("RGBA", (width, height), (0, 0, 0, 255))
 
     # Position and paste cards on the page
     positions = [
@@ -124,6 +125,7 @@ def make_page(cards):
         (1200,2200)
     ]
 
+    # Paste card on page
     for card, pos in zip(cards, positions):
         page.paste(card, pos, card)
 
