@@ -6,5 +6,5 @@ Our goal was to create a Spot-it! card deck that has 73 cards, 9 symbols per car
 2. In `library.py`, we made a variable called `file_names` which contained a list of the names of every face image.
 
 # Dependencies
-Pillow: [https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.rotate](https://pillow.readthedocs.io/en/stable/installation/basic-installation.html)
+Pillow: (https://pillow.readthedocs.io/en/stable/installation/basic-installation.html)
 * Purpose is to visualize cards.
